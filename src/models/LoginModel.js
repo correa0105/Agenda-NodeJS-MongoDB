@@ -1,3 +1,5 @@
+//FIZ ESTE METÓDO UTILIZANDO CLASSES DIFERENTE DO CONTACT MODEL QUE FIZ UTILIZANDO PROTOTYPES
+
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcryptjs = require("bcryptjs");
@@ -10,6 +12,7 @@ const LoginSchema = new mongoose.Schema({
 const LoginModel = mongoose.model("Login", LoginSchema);
 
 class Login {
+
     constructor(body) {
         this.body = body;
         this.errors = [];
@@ -17,37 +20,47 @@ class Login {
     }
 
     async login() {
-        this.validationUser();
-        if (this.errors.length > 0) return;
-        this.user = await LoginModel.findOne({ email: this.body.email });
+        try {
+            this.validationUser();
+            if (this.errors.length > 0) return;
+            this.user = await LoginModel.findOne({ email: this.body.email });
 
-        if (!this.user) return this.errors.push("Usuário não existe.");
+            if (!this.user) return this.errors.push("Usuário não existe.");
 
-        if (!bcryptjs.compareSync(this.body.password, this.user.password)) {
-            this.errors.push("Senha inválida!");
-            this.user = null;
-            return;
+            if (!bcryptjs.compareSync(this.body.password, this.user.password)) {
+                this.errors.push("Senha inválida!");
+                this.user = null;
+                return;
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 
     async register() {
-        this.validationUser();
+        try {
+            this.validationUser();
 
-        if (this.errors.length > 0) return;
+            if (this.errors.length > 0) return;
 
-        await this.userExists();
+            await this.userExists();
 
-        if (this.errors.length > 0) return;
-
-        const salt = bcryptjs.genSaltSync();
-        this.body.password = bcryptjs.hashSync(this.body.password, salt);
-
-        this.user = await LoginModel.create(this.body);
+            if (this.errors.length > 0) return;
+            const salt = bcryptjs.genSaltSync();
+            this.body.password = bcryptjs.hashSync(this.body.password, salt);
+            this.user = await LoginModel.create(this.body);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     async userExists() {
-        this.user = await LoginModel.findOne({ email: this.body.email });
-        if (this.user) this.errors.push("Usuário já existe.");
+        try {
+            this.user = await LoginModel.findOne({ email: this.body.email });
+            if (this.user) this.errors.push("Usuário já existe.");
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     validationUser() {

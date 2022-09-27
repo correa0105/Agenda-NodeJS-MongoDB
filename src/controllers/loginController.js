@@ -7,7 +7,6 @@ exports.index = (request, response) => {
 
 exports.register = async (request, response) => {
     try {
-
         const login = new Login(request.body);
         await login.register();
 
@@ -20,18 +19,14 @@ exports.register = async (request, response) => {
         request.flash("success", "Seu usuário foi criado com sucesso.");
         request.session.save(() => { return response.redirect("index"); });
         return;
-
     } catch (error) {
-
         console.log(error);
         return response.render("404");
-
     }
 };
 
 exports.login = async (request, response) => {
     try {
-
         const login = new Login(request.body);
         await login.login();
 
@@ -45,12 +40,9 @@ exports.login = async (request, response) => {
         request.session.user = login.user;
         request.session.save(() => { return response.redirect("index"); });
         return;
-
     } catch (error) {
-
         console.log(error);
         return response.render("404");
-
     }
 };
 
