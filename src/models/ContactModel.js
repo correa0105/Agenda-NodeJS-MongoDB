@@ -69,7 +69,6 @@ Contact.searchId = async function (id) {
     } catch (error) {
         console.log(error);
     }
-
 }
 
 Contact.searchContacts = async function () {
@@ -79,7 +78,6 @@ Contact.searchContacts = async function () {
     } catch (error) {
         console.log(error);
     }
-
 }
 
 Contact.delete = async function (id) {
@@ -90,7 +88,6 @@ Contact.delete = async function (id) {
     } catch (error) {
         console.log(error);
     }
-
 }
 
 module.exports = Contact;

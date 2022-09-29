@@ -1,7 +1,7 @@
-.navbar-nav .nav-link:hover {
+.navbar-nav .nav-link:hover, #list-contact:hover {
     background-color: #999;
 }
 
-.container-fluid .navbar-brand:hover {
-    text-shadow: 2px 2px 3px #999 !important;
-}   
+#list-contact {
+    padding: 13px 8px;
+}
